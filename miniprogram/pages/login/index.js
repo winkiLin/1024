@@ -43,10 +43,10 @@ Page({
       },
       success: res => {
         // 在返回结果中会包含新创建的记录的 _id
-        this.setData({
-          counterId: res._id,
-          count: 1,
-        })
+        // this.setData({
+        //   counterId: res._id,
+        //   count: 1,
+        // })
         wx.showToast({
           title: '注册成功',
         })
@@ -121,12 +121,11 @@ Page({
       return
     }
 
-    _this.onQuery()
+    _this.queryUser()
     _this.setData({loginloading : true,loginDisabled : true})
   },
   //刷新验证码
 onTap(){
-  console.log(this.mcaptcha,'图形验证码')
   this.mcaptcha.refresh();
   }
 }) 
