@@ -1,0 +1,32 @@
+.item {
+    width: 100%;
+    position: relative;
+    height: 90rpx;
+    border-bottom: #dedede solid 2rpx;
+}
+
+.item text {
+    width: 150rpx;
+    display: inline-block;
+    position: absolute;
+    left: 20rpx;
+    color: #484848;
+    font-size: 16px;
+    top: 25rpx;
+}
+.item input {
+    display: inline-block;
+    left: 190rpx;
+    position: absolute;
+    top: 25rpx;
+    right: 20rpx;
+}
+.btn-content{
+    text-align: center;
+    margin-top: 50%;
+}
+.btn-content button{
+    background: #007bff;
+    color: white;
+    display: inline-block;
+}

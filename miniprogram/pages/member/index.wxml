@@ -1,0 +1,47 @@
+<!--index.wxml-->
+<view class="my-info-view">
+	<view class="userinfo">
+		<view class="login-no" wx:if="{{!userInfo}}">
+      <image src=""></image>
+			<view >
+				<button class="login-btn" open-type="getUserInfo" bindgetuserinfo="login" >立即登录</button>
+			</view>
+		</view>
+
+		<view class="login-yes" wx:if="{{userInfo}}">
+			<image class="userinfo-avatar" bindtap="toSelectAvatar" src="{{userInfo.avatar}}" mode="cover"></image>
+			<text class="userinfo-nickname">{{userInfo.nickname}}</text>
+		</view>
+	</view>
+
+	<!--item-->
+	<view class="items">
+
+		<view class="item" bindtap="toEditInfo">
+			<text class="left">编辑个人资料</text>
+			<image class="right" src="../image/ic-right.png"></image>
+		</view>
+
+		<view class="item">
+			<text class="left">姓名</text>
+			<text class="right">{{row_info.name}}</text>
+		</view>
+
+		<view class="item">
+			<text class="left">联系方式</text>
+			<text class="right">{{row_info.mobile?row_info.mobile:''}}</text>
+		</view>
+
+		<view class="item">
+			<text class="left">所属公司</text>
+			<text class="right">{{row_info.company}}</text>
+		</view>
+
+		<view class="item">
+			<text class="left">所属职务</text>
+			<text class="right">{{row_info.role}}</text>
+		</view>
+
+	</view>
+
+</view>

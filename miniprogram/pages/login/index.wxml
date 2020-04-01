@@ -7,7 +7,7 @@
         <input type="number" placeholder="请输入手机号码" placeholder-style="color: #A1A0A9;" class="input" value="{{ username }}" bindinput="searchWrite" data-type="username" maxlength="11"></input>
     </view>
     <view class="item">
-        <input type="number" placeholder="请输入图形验证码" placeholder-style="color: #A1A0A9;" class="input" value="{{ passcode }}" bindinput="searchWrite" data-type="passcode" maxlength="6"></input>
+        <input type="number" placeholder="请输入图形验证码" placeholder-style="color: #A1A0A9;" class="input" value="{{ passcode }}" bindinput="searchWrite" data-type="passcode" maxlength="4"></input>
         <view style='position:relative;' bindtap="onTap">
             <canvas style="width:160rpx;height:70rpx;position:absolute;right:0rpx;bottom:10rpx;text-align: center;z-index:9999;" canvas-id="canvas"></canvas>
         </view>

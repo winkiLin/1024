@@ -5,51 +5,43 @@ import Mcaptcha from '../../utils/mcaptcha.js'
 const app = getApp()
 Page({
   data: {
-    captchaLabel:"获取验证码",
-    seconds: timer.length,
-    captchaDisabled: false,
     username: '',
     passcode: '',
-    msgloading: false,    
     loginDisabled: false,
     loginloading: false,
-    db:'',
-    phone:'',
-    openid:''
+    db: '',
+    phone: '',
+    openid: ''
   },
-  onReady(){
-    this.mcaptcha=new Mcaptcha({
+  onReady() {
+    /* 加载验证码 */
+    this.mcaptcha = new Mcaptcha({
       el: 'canvas',
       width: 80,
       height: 35,
       createCodeImg: ""
-      });
+    });
   },
   onLoad(e) {
-      let _this = this
-      wx.hideLoading()
-      _this.db = wx.cloud.database()
-
+    let _this = this
+    wx.hideLoading()
+    _this.db = wx.cloud.database();/* 加载云数据库操作对象 */
   },
 
 
   /* 新增用户 */
-  addUser: function () {
+  addUser: function (params) {
     let _this = this
     _this.db.collection('users').add({
       data: {
-        openid:this.data.openid,
-        phone:this.data.phone
+        phone: params
       },
       success: res => {
-        // 在返回结果中会包含新创建的记录的 _id
-        // this.setData({
-        //   counterId: res._id,
-        //   count: 1,
-        // })
+        console.log('增加了一个用户')
         wx.showToast({
           title: '注册成功',
         })
+        _this.setData({ loginloading: false, loginDisabled: false })
       },
       fail: err => {
         wx.showToast({
@@ -61,32 +53,37 @@ Page({
   },
 
   /* 查询用户信息 */
-  queryUser: function() {
+  queryUser: function () {
     let _this = this
-    // const db = wx.cloud.database()
-    // 查询当前用户所有的 user
+    console.log(_this.data.username, '输入的电话')
     _this.db.collection('users').where({
-      openid: this.data.openid
+      phone: _this.data.username
     }).get({
       success: res => {
-        wx.showToast({
-          icon: 'none',
-          title: '登陆成功'
+        if (res.data.length < 1) {
+          _this.addUser(_this.data.username);/* 添加用户 */
+        } else {
+          wx.showToast({
+            icon: 'none',
+            title: '登陆成功'
+          })
+        }
+        wx.redirectTo({
+          url:'../index/index'
         })
-        this.setData({
-          queryResult: JSON.stringify(res.data, null, 2)
-        })
+        _this.setData({ loginloading: false, loginDisabled: false })
       },
       fail: err => {
         wx.showToast({
           icon: 'none',
           title: '登陆失败'
         })
+        _this.setData({ loginloading: false, loginDisabled: false })
       }
     })
-    _this.setData({loginloading : false,loginDisabled : false})
 
   },
+  /* 双向绑定 */
   searchWrite(event) {
     this.setData({
       [`${event.target.dataset.type}`]: event.detail.value
@@ -94,9 +91,10 @@ Page({
   },
   // 登入
   loginBtn() {
-    let { username, passcode } = this.data,
-    _this = this    
-    if(!this.data.username.match(/^((1[3-9]{1})+\d{9})$/))  { 
+    let { passcode, username } = this.data
+    let _this = this
+    /* 手机号码格式验证 */
+    if (!username.match(/^((1[3-9]{1})+\d{9})$/)) {
       wx.showToast({
         title: '请输入正确的手机号码。',
         icon: 'none',
@@ -104,6 +102,7 @@ Page({
       })
       return false
     }
+    /* 图形验证码验证 */
     if (!passcode) {
       wx.showToast({
         title: '请输入图形验证码。',
@@ -120,12 +119,12 @@ Page({
       })
       return
     }
-
+    /* 查询数据库 */
     _this.queryUser()
-    _this.setData({loginloading : true,loginDisabled : true})
+    _this.setData({ loginloading: true, loginDisabled: true })
   },
   //刷新验证码
-onTap(){
-  this.mcaptcha.refresh();
+  onTap() {
+    this.mcaptcha.refresh();
   }
 }) 

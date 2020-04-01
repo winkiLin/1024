@@ -2,6 +2,8 @@
   "pages": [
     "pages/login/index",
     "pages/index/index",
+    "pages/member/index",
+    "pages/edit/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",

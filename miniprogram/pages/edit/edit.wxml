@@ -1,0 +1,14 @@
+<view class="view-edit-my-info">
+	<view class="item">
+		<text>编辑姓名</text>
+		<input bindinput="updateName" name="name" placeholder="请输入昵称" value="{{userInfo.name}}"/>
+	</view>
+	<view class="item">
+		<text>联系方式</text>
+		<input bindinput="updatePhone" name="phone" value="{{userInfo.mobile}}" placeholder="请输入电话"/>
+	</view>
+	<view class="btn-content">
+		<button bindtap="loadInofo">保存</button>
+	</view>
+
+</view>
